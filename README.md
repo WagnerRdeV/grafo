@@ -1,6 +1,6 @@
 ## Desenvolvedores: 
 - Vanessa Mendonça Leite &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RGA: 2022.1906.011-7
-- Wagner Rodrigues da Silva &nbsp;&nbsp;&nbsp;&nbsp;RGA: 
+- Wagner Rodrigues da Silva &nbsp;&nbsp;&nbsp;&nbsp;RGA: 2022.1906.028-1
 
 ## Instruções para execução
 
