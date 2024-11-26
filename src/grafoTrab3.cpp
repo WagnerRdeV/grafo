@@ -4,6 +4,8 @@
 #include <ctime>
 #include <queue>
 #include <climits>
+#include <iomanip> 
+#include <fstream>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ void AdcAresta(Grafico& G, int u, int v) {
 }
 
 // Função para calcular e imprimir o gmin, gmax e diametro através da busca em largura (BFS)
-void PrintDados(const Grafico& G) {
+void PrintDados(const Grafico& G, ofstream& outputFile) {
     int gmin = INT_MAX;
     int gmax = 0;
     double gmed = 0;
@@ -61,7 +63,15 @@ void PrintDados(const Grafico& G) {
     }
     // Fim do BFS
 
-    printf("%d   %d    %d      %d     %.1f    %d\n", G.V, G.numAresta, gmin, gmax, gmed, diam);
+    // Escreve os dados no terminal
+    cout << setw(5) << G.V << setw(8) << G.numAresta << setw(8) << gmin
+         << setw(8) << gmax << setw(8) << fixed << setprecision(1) << gmed
+         << setw(8) << diam << endl;
+
+    // Escreve os dados no arquivo
+    outputFile << setw(5) << G.V << setw(8) << G.numAresta << setw(8) << gmin
+               << setw(8) << gmax << setw(8) << fixed << setprecision(1) << gmed
+               << setw(8) << diam << endl;
 }
 
 // Função para criar um grafo
@@ -91,11 +101,31 @@ int main() {
     int fim = 200;
     int stp = 10;
     double p = 0.1;
-    printf("V    E   gmin   gmax   gmed   diam\n-----------------------------------------------\n");
+
+    // Abre o arquivo para escrita
+    ofstream outputFile("grafico_resultados.txt");
+    if (!outputFile) {
+        cerr << "Erro ao abrir o arquivo para escrita." << endl;
+        return 1;
+    }
+
+    // Escreve o cabeçalho no terminal e no arquivo
+    cout << setw(5) << "V" << setw(8) << "E" << setw(8) << "gmin"
+         << setw(8) << "gmax" << setw(8) << "gmed" << setw(8) << "diam" << endl;
+    cout << "-----------------------------------------------" << endl;
+
+    outputFile << setw(5) << "V" << setw(8) << "E" << setw(8) << "gmin"
+               << setw(8) << "gmax" << setw(8) << "gmed" << setw(8) << "diam" << endl;
+    outputFile << "-----------------------------------------------" << endl;
+
+    // Gera os grafos e escreve os resultados
     for (int n = ini; n <= fim; n += stp) {
         Grafico G = GerarGrafico(n, p);
-        PrintDados(G);
+        PrintDados(G, outputFile);
     }
+
+    // Fecha o arquivo
+    outputFile.close();
 
     return 0;
 }
